@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semáforo</title>
+    <style>
+        *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+main {
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5vh;
+}
+.button {
+    width: 80px;
+    color: #fff;
+    background-color: #000;
+    border: none;
+    border-radius: 25px;
+}
+    </style>
+
+</head>
+<body>
+    <main>
+        <div>
+            <img src="/semaforo/img/desligado.png" id='img' >
+        </div>
+        <div id='buttons'>
+            <button id='red' class="button" >Vermelho</button>
+            <button id='yellow' class="button" >Amarelo</button>
+            <button id='green' class="button" >Verde</button>
+            <button name='teste' id='automatic' class="button" >Automático</button>
+        </div>
+    </main>
+
+    <script>
+
+
+const img = document.getElementById('img');//precisamos pegar a imagem classica ou a primeira
+const buttons = document.getElementById('buttons'); //vamos pegar  a div dos buttoes para que assim todos os botoes funcionem
+let colorIndex = 0; //aonde vai começar a imagem
+let intervaID = null;
+const trafficLght = (event)=>{
+    stopAutomatic();
+turnOn[event.target.id]();//ele vai pegar o evento e o alvo que é o vermelho amarelo ou verde dos buttoes 
+ 
+}
+const nextIndex = () =>  colorIndex = colorIndex < 2 ? ++colorIndex : 0; //resumo o ? diferente
+   
+    
+    /*if(colorIndex  < 2){
+        colorIndex++
+    }else{
+        colorIndex = 0;
+    }*/
+const changeColor = () => { //aqui vamos mudar as cores exemplo
+    const colors = ['red','yellow','green']
+    const color = colors[colorIndex];
+    turnOn[color]();
+   nextIndex();
+};
+const stopAutomatic = () =>{
+clearInterval(intervaID); //vai limpar o tempo
+}
+const turnOn={//esse função pega todas as cores e o automatic deixa todas essas cores a cada 1 segundo
+    'red': () => img.src = '/semaforo/img/vermelho.png',
+    'yellow': () => img.src = '/semaforo/img/amarelo.png',
+    'green': () => img.src = '/semaforo/img/verde.png',
+    'automatic': () => intervaID = setInterval(changeColor, 1000)
+    
+}
+
+buttons.addEventListener('click', trafficLght ) //os butoes tem evento de click
+
+
+
+
+    </script>
+</body>
+</html>
